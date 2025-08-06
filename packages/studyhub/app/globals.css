@@ -1,0 +1,12 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove default orange outline, add custom blue glow */
+
+.ProseMirror {
+}

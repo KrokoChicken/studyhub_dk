@@ -1,0 +1,109 @@
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, sans-serif;
+  color: #1e1e1e;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.subTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.flexHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.leaveButton {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.leaveButton:hover {
+  background-color: #e43e3f;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.createButton,
+.joinButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #0070f3;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  white-space: nowrap;
+}
+
+.createButton:hover,
+.joinButton:hover {
+  background-color: #0059c1;
+}
+
+.notesSection {
+  margin-top: 2rem;
+}
+
+.noteList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.noteItem {
+  margin-bottom: 1rem;
+}
+
+.noteButton {
+  width: 100%;
+  text-align: left;
+  padding: 1rem;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.noteButton:hover {
+  background-color: #eaeaea;
+}
+
+.noteDate {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #555;
+}

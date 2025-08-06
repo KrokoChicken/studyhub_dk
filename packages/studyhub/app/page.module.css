@@ -1,0 +1,21 @@
+.container {
+  background-color: #007bff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* Flytter indholdet til venstre */
+  padding-left: 5rem; /* Giver lidt luft fra venstrekant */
+  color: white;
+  text-align: left; /* Sørger for venstrestillet tekst */
+}
+
+.title {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 2rem;
+  margin-top: 1rem;
+}

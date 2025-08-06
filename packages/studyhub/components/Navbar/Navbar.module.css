@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  height: 40px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo a {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #111827;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLinks a,
+.navLinks button {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.navLinks button:hover,
+.navLinks a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  color: #999;
+  user-select: none;
+}

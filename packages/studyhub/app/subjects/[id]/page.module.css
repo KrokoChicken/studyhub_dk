@@ -1,0 +1,20 @@
+.pageLayout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #f1f5ff;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f5f7fa;
+  overflow-y: auto;
+}

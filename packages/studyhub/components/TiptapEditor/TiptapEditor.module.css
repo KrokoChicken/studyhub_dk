@@ -1,0 +1,163 @@
+/* TiptapEditor.module.css */
+
+/* Common editor styles */
+.editor {
+  min-height: 300px;
+  outline-offset: 4px;
+  outline-color: transparent;
+  outline-style: solid;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    outline-color 0.15s ease-in-out, border-color 0.3s ease;
+  border: 1.5px solid transparent;
+}
+
+.editor p {
+  margin: 0 0 1rem 0;
+}
+
+.editor img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  border-radius: 6px;
+  cursor: grab;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.25s ease;
+}
+
+.editor img:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.editor img:active {
+  cursor: grabbing;
+}
+
+/* Light theme */
+.light {
+  background-color: #f9fafb;
+  color: #111827;
+  border-color: #d1d5db;
+}
+
+/* Dark theme */
+.dark {
+  background-color: #121212;
+  color: white;
+  border-color: #333;
+}
+
+/* Toolbar common */
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.toolbar button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+}
+
+/* Light theme toolbar */
+.light .toolbar {
+  background-color: white;
+  border-color: #d1d5db;
+}
+
+.light .toolbar button {
+  border-color: #2563eb;
+  background: white;
+  color: #2563eb;
+}
+
+.light .toolbar button:hover:not(:disabled) {
+  background-color: #2563eb;
+  color: white;
+  border-color: #1e40af;
+}
+
+/* Light theme toolbar button active */
+.light .toolbar button.active {
+  background-color: #1e40af; /* Darker blue */
+  color: white;
+  border-color: #1e40af;
+  box-shadow: 0 0 8px #1e40afaa; /* subtle glow */
+}
+
+/* Dark theme toolbar button active */
+.dark .toolbar button.active {
+  background-color: #2563eb; /* Bright blue */
+  color: white;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px #2563ebaa; /* subtle glow */
+}
+
+/* Dark theme toolbar */
+.dark .toolbar {
+  background-color: #222;
+  border-color: #444;
+}
+
+.dark .toolbar button {
+  border-color: #ccc;
+  background: #222;
+  color: white;
+}
+
+.dark .toolbar button:hover:not(:disabled) {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.dark .toolbar button.active {
+  background-color: #2563eb; /* Bright blue */
+  color: white;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px #2563ebaa; /* subtle glow */
+}
+
+/* Drop cursor colors */
+.light .dropCursor {
+  border-left: 4px solid #2563eb !important;
+  background-color: rgba(37, 99, 235, 0.15);
+}
+
+.dark .dropCursor {
+  border-left: 4px solid white !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.group {
+  display: flex;
+  gap: 4px;
+}
+
+.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px #2563ebaa;
+}
