@@ -1,0 +1,39 @@
+{
+  "name": "monorepo",
+  "private": true,
+  "packageManager": "yarn@4.9.2",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "yjs": "^13.6.27"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.14",
+    "@types/react": "^19.1.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "resolutions": {
+    "prosemirror-model": "^1.25.1",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-transform": "^1.10.4",
+    "prosemirror-view": "^1.40.0"
+  },
+  "packageExtensions": {
+    "@tiptap/pm@*": {
+      "dependencies": {
+        "prosemirror-model": "^1.25.1",
+        "prosemirror-state": "^1.4.3",
+        "prosemirror-transform": "^1.10.4",
+        "prosemirror-view": "^1.40.0"
+      }
+    },
+    "prosemirror-dropcursor@*": {
+      "dependencies": {
+        "prosemirror-state": "^1.4.3",
+        "prosemirror-view": "^1.40.0"
+      }
+    }
+  }
+}

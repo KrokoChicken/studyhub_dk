@@ -1,0 +1,21 @@
+# Yarn PnP
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarn/cache/
+
+# Node
+node_modules/
+
+# Build
+.next/
+dist/
+out/
+
+# OS / IDE
+.DS_Store
+*.log

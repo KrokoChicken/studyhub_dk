@@ -1,0 +1,22 @@
+{
+  "name": "simple-ws-server",
+  "private": true,
+  "version": "1.0.0",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm server.ts"
+  },
+  "dependencies": {
+    "@hocuspocus/server": "^3.2.0",
+    "dotenv": "^17.0.0",
+    "pg": "^8.11.3",
+    "ws": "^8.18.3",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.27"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
