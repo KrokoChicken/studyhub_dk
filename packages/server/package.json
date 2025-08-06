@@ -1,5 +1,5 @@
 {
-  "name": "simple-ws-server",
+  "name": "server",
   "private": true,
   "version": "1.0.0",
   "main": "server.ts",

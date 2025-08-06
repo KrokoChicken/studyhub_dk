@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -10,6 +10,8 @@ import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 
 import * as Y from "yjs";
 import { HocuspocusProvider } from "@hocuspocus/provider";
+
+import styles from "./CollaborativeEditor.module.css";
 
 export default function Editor({
   roomId,
@@ -61,7 +63,12 @@ export default function Editor({
         },
       }),
     ],
+    immediatelyRender: false, // ✅ Prevent SSR hydration mismatch
   });
 
-  return <EditorContent editor={editor} />;
+  return (
+    <div className={styles.editorWrapper}>
+      <EditorContent editor={editor} className={styles.editorContent} />
+    </div>
+  );
 }

@@ -4,11 +4,12 @@ import { collabNotes } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { roomId: string } }
+  req: NextRequest
 ) {
   try {
-    const roomId = params.roomId; // no await here!
+    const url = new URL(req.url);
+    const segments = url.pathname.split("/");
+    const roomId = segments[segments.length - 1];
 
     if (!roomId) {
       return NextResponse.json({ error: "Missing roomId" }, { status: 400 });
@@ -32,7 +33,7 @@ export async function GET(
       );
     }
 
-    const ydocStateBase64 = note.ydocState.toString("base64");
+    const ydocStateBase64 = Buffer.from(note.ydocState).toString("base64"); // ✅ use Buffer.from
 
     return NextResponse.json({
       note: {
