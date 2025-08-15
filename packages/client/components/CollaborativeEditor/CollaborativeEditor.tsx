@@ -1,3 +1,5 @@
+/*
+
 // components/CollaborativeEditor/CollaborativeEditor.tsx
 
 "use client"; // Enables client-side rendering in Next.js for this component
@@ -208,6 +210,183 @@ export default function Editor({
   return (
     <div className={styles.editorWrapper}>
       {}
+      <EditorContent editor={editor} className={styles.editorContent} />
+    </div>
+  );
+}
+*/
+
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
+import Collaboration from "@tiptap/extension-collaboration";
+import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
+import { Image } from "../extensions/Image";
+import { SafeSelectionPlugin } from "../extensions/SafeSelectionPlugin";
+import { uploadToSupabase } from "@/lib/uploadtoSupabase";
+import * as Y from "yjs";
+import { HocuspocusProvider } from "@hocuspocus/provider";
+import { ImageStorageWatcher } from "../extensions/ImageStorageWatcher";
+import { TextSelection } from "@tiptap/pm/state";
+import styles from "./CollaborativeEditor.module.css";
+import { useSession } from "next-auth/react";
+
+export default function CollaborativeEditor({ roomId }: { roomId: string }) {
+  const { data: session } = useSession();
+
+  const [ydoc] = useState(() => new Y.Doc());
+
+  const color = useMemo(
+    () =>
+      "#" +
+      Math.floor(Math.random() * 0xffffff)
+        .toString(16)
+        .padStart(6, "0"),
+    []
+  );
+
+  const provider = useMemo(() => {
+    return new HocuspocusProvider({
+      url: "ws://localhost:1234",
+      name: roomId,
+      document: ydoc,
+    });
+  }, [roomId, ydoc]);
+
+  // Set awareness when session is loaded
+  useEffect(() => {
+    const name =
+      session?.user?.name ?? `Guest${Math.floor(Math.random() * 10000)}`;
+
+    if (provider.awareness) {
+      provider.awareness.setLocalStateField("user", { name, color });
+    }
+  }, [session, color, provider]);
+
+  const uploadAndInsertImage = async (file: File) => {
+    try {
+      const url = await uploadToSupabase(file);
+      if (url && editor) {
+        editor
+          .chain()
+          .focus()
+          .setImage({ src: url, alt: file.name, width: "400" })
+          .run();
+      }
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  };
+
+  const editor = useEditor({
+    extensions: [
+      Document,
+      Paragraph,
+      Text,
+      Image,
+      ImageStorageWatcher,
+      Collaboration.configure({ document: ydoc, field: "prosemirror" }),
+      CollaborationCursor.configure({
+        provider,
+        user: {
+          name: session?.user?.name ?? "Guest",
+          color,
+        },
+      }),
+      SafeSelectionPlugin,
+    ],
+    editorProps: {
+      handlePaste(view, event) {
+        const items = Array.from(event.clipboardData?.items || []);
+        const file = items.find((i) => i.type.includes("image"))?.getAsFile();
+        if (!file) return false;
+
+        event.preventDefault();
+        uploadAndInsertImage(file);
+        return true;
+      },
+      handleDrop(view, event) {
+        const file = Array.from(event.dataTransfer?.files || []).find((f) =>
+          f.type.includes("image")
+        );
+        if (!file) return false;
+
+        event.preventDefault();
+        uploadAndInsertImage(file);
+        return true;
+      },
+      handleDOMEvents: {
+        beforeinput(view, evt) {
+          const e = evt as InputEvent;
+          if (!e || typeof e.inputType !== "string") return false;
+
+          const isDelete =
+            e.inputType === "deleteContentBackward" ||
+            e.inputType === "deleteContentForward";
+          if (!isDelete) return false;
+
+          const { state } = view;
+          const { $from } = state.selection as any;
+          const isImage = (n: any) => n?.type?.name === "image";
+
+          const targetNode =
+            e.inputType === "deleteContentBackward"
+              ? $from?.nodeBefore
+              : $from?.nodeAfter;
+
+          const src: string | undefined = targetNode?.attrs?.src;
+          if (targetNode && isImage(targetNode) && src) {
+            fetch("/api/storage/delete-image", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ url: src }),
+            }).catch(() => {});
+          }
+
+          return false;
+        },
+      },
+    },
+    immediatelyRender: false,
+  });
+
+  useEffect(() => {
+    const onSynced = () => {
+      const view = editor?.view;
+      if (!view) return;
+
+      const sel: any = view.state.selection;
+      if (sel?.constructor?.name === "NodeSelection") {
+        const pos = Math.min(sel.from ?? 0, view.state.doc.content.size);
+        view.dispatch(
+          view.state.tr.setSelection(TextSelection.create(view.state.doc, pos))
+        );
+      }
+    };
+    provider.on("synced", onSynced);
+
+    return () => {
+      provider.off("synced", onSynced);
+    };
+  }, [editor, provider]);
+
+  useEffect(() => {
+    return () => {
+      provider.destroy();
+      editor?.destroy();
+    };
+  }, []);
+
+  if (typeof window !== "undefined" && editor) {
+    (window as any).editor = editor;
+  }
+
+  return (
+    <div className={styles.editorWrapper}>
       <EditorContent editor={editor} className={styles.editorContent} />
     </div>
   );
